@@ -1,1 +1,90 @@
-print("not complete yet smh")
+-- Instances
+
+local KeySystem = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local Title = Instance.new("TextLabel")
+local Noclip = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local NoclipOn = false
+
+-- Properties
+
+KeySystem.Name = "KeySystem"
+KeySystem.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+KeySystem.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+KeySystem.ResetOnSpawn = false
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = KeySystem
+MainFrame.BackgroundColor3 = Color3.new(0.188235, 0.188235, 0.188235)
+MainFrame.BorderColor3 = Color3.new(0, 0, 0)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+MainFrame.Size = UDim2.new(0, 800, 0, 500)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+UICorner.Parent = MainFrame
+UICorner.CornerRadius = UDim.new(0.100000001, 0)
+
+Title.Name = "Title"
+Title.Parent = MainFrame
+Title.BackgroundColor3 = Color3.new(1, 1, 1)
+Title.BackgroundTransparency = 1
+Title.BorderColor3 = Color3.new(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(0, 800, 0, 100)
+Title.Font = Enum.Font.SourceSans
+Title.Text = "Slayer V"
+Title.TextColor3 = Color3.new(0, 0, 0)
+Title.TextSize = 50
+Title.TextStrokeColor3 = Color3.new(1, 1, 1)
+Title.TextWrapped = true
+
+Noclip.Name = "Noclip"
+Noclip.Parent = MainFrame
+Noclip.BackgroundColor3 = Color3.new(0.878431, 0, 0)
+Noclip.BorderColor3 = Color3.new(0, 0, 0)
+Noclip.BorderSizePixel = 0
+Noclip.Position = UDim2.new(0.5, -100, 0.5, -25)
+Noclip.Size = UDim2.new(0, 200, 0, 50)
+Noclip.Font = Enum.Font.SourceSans
+Noclip.Text = "Noclip: Off"
+Noclip.TextColor3 = Color3.new(0, 0, 0)
+Noclip.TextSize = 25
+
+UICorner_2.Parent = Noclip
+UICorner_2.CornerRadius = UDim.new(1, 0)
+
+Noclip.MouseButton1Up:Connect(function()
+	if NoclipOn == false then
+		NoclipOn = true
+		Noclip.BackgroundColor3 = Color3.fromRGB(0,224,0)
+		Noclip.Text = "Noclip: On"
+	elseif NoclipOn == true then
+		NoclipOn = false
+		Noclip.BackgroundColor3 = Color3.fromRGB(224,0,0)
+		Noclip.Text = "Noclip: Off"
+	end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if NoclipOn == false then
+		for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+			if v.Name == "HumanoidRootPart" then
+				v.CanCollide = true
+			end
+		end
+	elseif NoclipOn == true then
+		for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+			if v.ClassName == "Part" then
+				v.CanCollide = false
+			elseif v.ClassName == "BasePart" then
+				v.CanCollide = false
+			elseif v.ClassName == "MeshPart" then
+				v.CanCollide = false
+			end
+		end
+	end
+end)
