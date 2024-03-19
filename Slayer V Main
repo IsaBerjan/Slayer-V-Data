@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IsaBerjan/Slayer-V-Data/main/Slayer%20V%20Code"))();
